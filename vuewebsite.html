@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Experiment</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.11/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Conditional Rendering Example</h1>
+    
+    <div>
+      <h2>v-if / v-else</h2>
+      <p v-if="showMessage">This is a message when showMessage is true.</p>
+      <p v-else>This is a message when showMessage is false.</p>
+      <button @click="toggleMessage">Toggle Message</button>
+    </div>
+    
+    <div>
+      <h2>v-show</h2>
+      <p v-show="showParagraph">This paragraph is shown/hidden using v-show.</p>
+      <button @click="toggleParagraph">Toggle Paragraph</button>
+    </div>
+    
+    <div>
+      <h2>v-for</h2>
+      <ul>
+        <li v-for="(item, index) in items" :key="index">{{ item }}</li>
+      </ul>
+    </div>
+    
+    <div>
+      <h2>v-if with v-for</h2>
+      <ul>
+        <li v-for="(item, index) in items" :key="index" v-if="index % 2 === 0">{{ item }}</li>
+      </ul>
+    </div>
+    
+    <h1>Form Input Handling Example</h1>
+    
+    <div>
+      <label for="inputText">Input Text:</label>
+      <input type="text" id="inputText" v-model="inputValue">
+      <p>You entered: {{ inputValue }}</p>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          showMessage: true,
+          showParagraph: true,
+          items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'],
+          inputValue: ''
+        };
+      },
+      methods: {
+        toggleMessage() {
+          this.showMessage = !this.showMessage;
+        },
+        toggleParagraph() {
+          this.showParagraph = !this.showParagraph;
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>

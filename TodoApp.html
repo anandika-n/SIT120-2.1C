@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <h1>Welcome, mate !</h1>
+  <style>
+    body 
+    {
+      font-family: Arial, sans-serif;
+    }
+    .todo-container 
+    {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #d36d6d;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .todo-item 
+    {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #080707;
+      border-radius: 5px;
+      background-color: #b39898;
+    }
+    .completed 
+    {
+      text-decoration: line-through;
+      color: #46a507;
+    }
+    button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="todo-container">
+    <h1>Todo App</h1>
+    <div>
+      <input type="text" v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new todo">
+      <button @click="addTodo">Add</button>
+    </div>
+    <ul>
+      <li v-for="(todo, index) in todos" :key="index" :class="{ 'todo-item': true, 'completed': todo.completed }">
+        {{ todo.text }}
+        <button @click="toggleCompletion(index)">{{ todo.completed ? 'Uncomplete' : 'Complete' }}</button>
+        <button @click="deleteTodo(index)">Delete</button>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.11/dist/vue.global.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          newTodo: '',
+          todos: []
+        };
+      },
+      methods: {
+        addTodo() {
+          if (this.newTodo.trim() !== '') {
+            this.todos.push({ text: this.newTodo, completed: false });
+            this.newTodo = '';
+          }
+        },
+        toggleCompletion(index) {
+          this.todos[index].completed = !this.todos[index].completed;
+        },
+        deleteTodo(index) {
+          this.todos.splice(index, 1);
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
